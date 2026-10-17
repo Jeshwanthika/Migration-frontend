@@ -122,13 +122,10 @@ export default function App() {
     listRuns().then(setRecent).catch(() => setRecent([]));
   }, []);
 
-  // After a browser refresh, pick up the most recent run so its pages are not lost.
+  // Always start on the Upload page. Past runs stay available from the Run picker in the top bar.
   useEffect(() => {
-    listRuns().then((runs) => {
-      setRecent(runs);
-      if (runs.length > 0) poll(runs[0].run_id);
-    }).catch(() => undefined);
-  }, [poll]);
+    refreshRecent();
+  }, [refreshRecent]);
 
   async function openRun(runId: string) {
     resetRun();
